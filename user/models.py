@@ -11,14 +11,21 @@ class Profile(BaseModel):
     This model represents the profile info of Internal Personals.
     """
        
+    student = 'student'
+    teacher = 'teacher'
+    admin = 'admin'
+    
+    USER_ROLE_CHOICES = ((student, ("Öğrenci")), (teacher, ("Öğretmen")), (admin,("Yönetici")))    
+       
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     user_image = models.ImageField(("Profil Resmi"), upload_to='images/profiles/', null=True, blank=True,
                               help_text=("Lütfen kare profil resminizi kare olacak şekilde yükleyin, yoksa fotoğrafınız kırpılacaktır."))
     namesurname = models.CharField(("Ad Soyad"), max_length=200, default="")
     phone_number = models.CharField(("Telefon Numarası"), max_length=50, blank=False, null=True)
     address = models.TextField(("Adres"), blank=True, null=True)
-    student_number = models.CharField(("Öğrenci Numarası"), max_length=9, blank=True, null=True)
+    student_number = models.CharField(("Öğrenci Numarası"), max_length=9, blank=False, null=False, unique=True, db_index=True)
     identification_number = models.CharField(("TC Kimlik No"), max_length=11, blank=True, null=True)
+    user_role = models.CharField(("Kullanıcı Rolü"), max_length=17, choices=USER_ROLE_CHOICES, default=student)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
@@ -54,3 +61,13 @@ class Profile(BaseModel):
     @staticmethod
     def get_read_only_fields():
         return ['student_number', 'identification_number']
+    
+    def student_permitted(self):
+        allowed_user_roles = (Profile.admin, Profile.student)
+        student_permitted = self.user_role in allowed_user_roles
+        return student_permitted
+
+    def is_allowed_simple(self):
+        allowed_simple_roles = (Profile.admin, Profile.student)
+        is_allowed_simple = self.user_role in allowed_simple_roles
+        return is_allowed_simple

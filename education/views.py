@@ -10,4 +10,4 @@ class AdaptationList(LoginRequiredMixin, View):
         if not request.user.profile.is_allowed_user():
             messages.error(request, 'Bu işlemi yapmak için izniniz bulunmuyor.')
             return redirect('dashboard')
-        return render(request, 'adaptation/professor/adaptation_list.html', context)
+        return render(request, 'education/professor/education_list.html', context)

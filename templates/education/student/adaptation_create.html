@@ -75,7 +75,7 @@
     faculty_list_api_url.pathname = "{% url 'adaptation:faculty_list_api' %}"
     science_list_api_url = new URL(window.location.href) 
     science_list_api_url.pathname = "{% url 'adaptation:science_list_api' %}"
-    adaptation_create_api_url = "{% url 'adaptation:adaptation_create_api' %}"
+    adaptation_create_api_url = "{% url 'education:education_create_api' %}"
 </script>
 
 <script src="{% static 'js/adaptation/adaptation_create.js' %}"></script>

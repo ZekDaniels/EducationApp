@@ -1,13 +1,6 @@
 from rest_framework import serializers
-from education.models import Science, Lesson
+from education.models import Lesson
 from utilities.serializers import ErrorNameMixin
-
-class ScienceListSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Science
-        fields = "__all__"
-
         
 class LessonListSerializer(serializers.ModelSerializer):
 

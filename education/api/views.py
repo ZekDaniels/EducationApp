@@ -5,14 +5,6 @@ from rest_framework import generics
 
 from utilities.views import QueryListAPIView
 
-class ScienceListView(QueryListAPIView):
-    
-    custom_related_fields = ["university"]
-    queryset = Science.objects.select_related(*custom_related_fields).all()
-    serializer_class = ScienceListSerializer
-    filter_backends = [OrderingFilter]
-    ordering_fields = '__all__'
-    
 class LessonListAPIView(QueryListAPIView):
    
     custom_related_fields = ["adaptation", "adaptation_class"]
