@@ -5,16 +5,6 @@ DEBUG = True
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intibak',
-        'USER': 'postgres',
-        'PASSWORD': '1126',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 #This settings for temporary use so they will change in production
 # https://data-flair.training/blogs/django-send-email/

@@ -15,17 +15,11 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', "django-insecure-_)*w=1-mr1*+o_xmbw5^vpj=$u5+q9n_fcvr+g2-j8l7wx%z5m")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_)*w=1-mr1*+o_xmbw5^vpj=$u5+q9n_fcvr+g2-j8l7wx%z5m'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 
 
 # Application definition
@@ -42,7 +36,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     #myapps
     'user',
-    'adaptation',
+    'education',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +48,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
 
 ROOT_URLCONF = 'core.urls'
 
@@ -142,8 +143,6 @@ STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

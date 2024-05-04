@@ -1,13 +1,14 @@
-from education.api.serializers import *
-from django.core.validators import EMPTY_VALUES
 from django.db.models import QuerySet, ForeignObjectRel, ForeignKey, Q
 from rest_framework import generics
-from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.filters import OrderingFilter
 from rest_framework_datatables.filters import DatatablesFilterBackend, f_search_q
-from django.contrib.auth.models import User
+from rest_framework.permissions import BasePermission
 
-from user.api.serializers import UserListSerializer
+class AdminsPermissions(BasePermission):
 
+    def has_permission(self, request, view):
+        is_allowed_user = request.user.is_staff
+        return is_allowed_user
 
 class CustomDatatablesFilterBackend(DatatablesFilterBackend):
 
@@ -72,13 +73,3 @@ class QueryListAPIView(generics.ListAPIView):
             else:
                 self._paginator = None
         return self._paginator
-
-
-class UserListView(QueryListAPIView):
-
-    # custom_related_fields = [""]
-    # queryset = User.objects.select_related(*custom_related_fields).all()
-    queryset = User.objects.all()
-    serializer_class = UserListSerializer
-    filter_backends = [OrderingFilter]
-    ordering_fields = '__all__'

@@ -5,29 +5,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from user.models import Profile
-
-
-STYLES = {
-     "else": {
-        'class': 'form-control'
-    }
-}
-
-
-class StyledFormMixin(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name in self.fields:
-          
-            if hasattr(self, "FIELDS"):
-                if name in self.FIELDS:
-                    self.fields[name].widget.attrs.update(self.FIELDS[name])
-            # add some special classes depend on the element
-            if self.fields[name].widget.__class__.__name__ in STYLES:
-                self.fields[name].widget.attrs.update(STYLES[self.fields[name].widget.__class__.__name__])
-            else:
-                self.fields[name].widget.attrs.update(STYLES["else"])
-                
+from utilities.forms import StyledFormMixin
 class UserLoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False)
     
@@ -90,7 +68,7 @@ class NewProfileForm(forms.ModelForm, StyledFormMixin):
 
     class Meta:
         model = Profile
-        fields = ['namesurname', 'identification_number', 'student_number', 'education_time', 'phone_number', 'education_time']
+        fields = ['namesurname', 'identification_number', 'student_number','phone_number']
 
 class ProfileUpdateForm(NewProfileForm):
 

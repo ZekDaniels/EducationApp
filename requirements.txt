@@ -1,4 +1,3 @@
-arabic-reshaper==2.1.3
 asgiref==3.4.1
 black==21.12b0
 certifi==2021.10.8
@@ -22,7 +21,6 @@ packaging==21.3
 pathspec==0.9.0
 Pillow==8.3.0
 platformdirs==2.4.1
-psycopg2==2.9.1
 pyparsing==3.0.6
 PyPDF2==1.26.0
 python-bidi==0.4.2

@@ -9,7 +9,7 @@ DATABASES = {
         "ENGINE": os.environ.get(
             "SQL_ENGINE", "django.db.backends.postgresql_psycopg2"
         ),
-        "NAME": os.environ.get("SQL_DATABASE", "intibak"),
+        "NAME": os.environ.get("SQL_DATABASE", "education"),
         "USER": os.environ.get("SQL_USER", "postgres"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
