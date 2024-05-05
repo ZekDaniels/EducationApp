@@ -54,7 +54,6 @@ class RegisterView(View):
             with transaction.atomic():
                 user = userform.save(commit=False)  
                 user.is_active = False
-                import ipdb; ipdb.set_trace()
                 if profileform.cleaned_data.get('is_teacher'):
                     user.profile.user_role = Profile.teacher
                 user.save()  
