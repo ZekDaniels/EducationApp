@@ -9,6 +9,7 @@ from user.models import Profile
 class LessonListSerializer(serializers.ModelSerializer):
     
     teacher = ProfileListSerializer(read_only=True)
+    semester_humanize = serializers.CharField(source='get_semester_display')
     
     class Meta:
         model = Lesson

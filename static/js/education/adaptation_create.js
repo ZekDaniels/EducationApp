@@ -68,7 +68,7 @@ function getSelectionText() {
   }
 }
 
-//Adaptation Activies
+//education Activies
 function fillUniversities() {
   fetch(university_list_api_url)
   .then((response) => response.json())
@@ -129,11 +129,11 @@ function setupListeners() {
     formData.append("is_unrecorded", is_unrecorded);
     let data = Object.fromEntries(formData.entries());
     let button = $(this).find("button[type='submit']").first();
-    createAdaptation(data, adaptation_create_api_url, button);
+    createeducation(data, education_create_api_url, button);
   });
 }
 
-function createAdaptation(_data, _url, _button) {
+function createeducation(_data, _url, _button) {
   let button_text = ""
   if (_button) {
     button_text = _button.html();

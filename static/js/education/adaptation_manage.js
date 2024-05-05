@@ -5,7 +5,7 @@ const request = new Request(csrfToken);
 const update_class_button_selector = ".update_class_button";
 const delete_class_button_selector = ".delete_class_button";
 const show_content_button_selector =".show_content_button";
-const finish_adaptation_button_selector ="#finish_adaptation_button";
+const finish_education_button_selector ="#finish_education_button";
 
 const semester_dropdowns_selector = ".toggle-semester-table";
 
@@ -21,11 +21,11 @@ const addClassForm = $("#addClassForm");
 
 const addClassModal = $("#addClassModal");
 const deleteClassModal = $("#deleteClassModal");
-const AdaptationClassContentModal = $("#AdaptationClassContentModal");
+const educationClassContentModal = $("#educationClassContentModal");
 
 const main_submit_button = $("#main_submit_button");
 const add_class_button = $("#add_class_button");
-const finish_adaptation_button = $(finish_adaptation_button_selector);
+const finish_education_button = $(finish_education_button_selector);
 const activate_button = $("#activate_button");
 const deactivate_button = $("#deactivate_button");
 const custom_record = $("#custom_record");
@@ -73,7 +73,7 @@ init();
 
 function init() {
   setupListeners();
-  initializeStudentClassDatatables(table, student_classes_list_api_url, adaptation_id)
+  initializeStudentClassDatatables(table, student_classes_list_api_url, education_id)
 }
 
 function clearAddClassForm() {
@@ -123,12 +123,12 @@ function setupListeners() {
     let formData = new FormData(this);
     formData.append("is_unrecorded", is_unrecorded);
     let data = Object.fromEntries(formData.entries());
-    UpdateAdaptation(data, adaptation_update_api_url, main_submit_button);
+    Updateeducation(data, education_update_api_url, main_submit_button);
   });
   addClassForm.submit(function name(event) {
     event.preventDefault();
     let formData = new FormData(this);
-    formData.append("adaptation", adaptation_id);
+    formData.append("education", education_id);
     let data = Object.fromEntries(formData.entries());
 
     if (updateable)
@@ -177,11 +177,11 @@ $(semester_dropdowns_selector).on("click", function(){
 
 $(show_content_button_selector).on("click", function(){
   let id = $(this).data("id");
-  getAdaptationClassContent(id, adaptation_class_detail_api_url, AdaptationClassContentModal)
+  geteducationClassContent(id, education_class_detail_api_url, educationClassContentModal)
 });
-$(finish_adaptation_button_selector).on("click", function(){
+$(finish_education_button_selector).on("click", function(){
   data = { 'is_closed': true };
-  finishAdaptation(adaptation_id, data, adaptation_update_api_url, finish_adaptation_button);
+  finisheducation(education_id, data, education_update_api_url, finish_education_button);
 });
 
 $(addClassModal).on('hidden.bs.modal', function () {
@@ -189,7 +189,7 @@ $(addClassModal).on('hidden.bs.modal', function () {
 });
 
 
-//Adaptation Activies
+//education Activies
 function fillUniversities() {
   fetch(university_list_api_url)
   .then((response) => response.json())
@@ -237,7 +237,7 @@ function updateSciences() {
   }
 }
 
-function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = null) {
+function Updateeducation(_data, _url, _button = null, _table = null, _modal = null) {
   let button_text = ""
   if (_button) {
     button_text = _button.html();
@@ -245,7 +245,7 @@ function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = n
     _button.html(`<i class="icon-spinner2 spinner"></i>`);
   }
   request
-    .patch_r(_url.replace("0", adaptation_id), _data).then((response) => {
+    .patch_r(_url.replace("0", education_id), _data).then((response) => {
       if (_button) {
         _button.html(button_text);
         _button.prop("disabled", false);
@@ -273,7 +273,7 @@ function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = n
     });
 }
 
-function finishAdaptation(_id,_data, _url, _button = null) {
+function finisheducation(_id,_data, _url, _button = null) {
   sweetCombineDynamic(
     "Emin misin?",
     "Bu intibak başvurusunu bitirmek istediğine emin misin!",
@@ -305,7 +305,7 @@ function finishAdaptation(_id,_data, _url, _button = null) {
 
 
 //Classes Activies
-function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _adaptation_id) {
+function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _education_id) {
   $.extend($.fn.dataTable.defaults, {
     autoWidth: false,
     dom: '<"datatable-header"fBl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -325,7 +325,7 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
     "searchCols": [
       null,
       {
-        "search": _adaptation_id
+        "search": _education_id
       },
     ],
     "serverSide": true,
@@ -373,23 +373,23 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
       },
       {
         "name":"code",
-        "data":"adaptation_class.code"
+        "data":"education_class.code"
       },
       {
         "name":"class_name",
-        "data":"adaptation_class.class_name"
+        "data":"education_class.class_name"
       },
       {
         "name":"semester",
-        "data":"adaptation_class.semester"
+        "data":"education_class.semester"
       },  
       {
         "name":"credit",
-        "data":"adaptation_class.credit"
+        "data":"education_class.credit"
       },   
       {
         "name":"akts",
-        "data":"adaptation_class.akts"
+        "data":"education_class.akts"
       },
       {
         "name":"max_grade",
@@ -409,13 +409,13 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
   });
 }
 
-function getAdaptationClassContent(_id, _url, _modal = null) {
+function geteducationClassContent(_id, _url, _modal = null) {
   request
     .get_r(_url.replace("0", _id))
     .then((response) => {
       if (response.ok) {
         response.json().then(data => {
-          fillAdaptationClassContent(data);
+          filleducationClassContent(data);
         })
       } else {
         response.json().then(errors => {
@@ -426,7 +426,7 @@ function getAdaptationClassContent(_id, _url, _modal = null) {
     })
 }
 
-function fillAdaptationClassContent(_data) {
+function filleducationClassContent(_data) {
   turkish_content.html(_data.turkish_content);
 }
 
@@ -534,7 +534,7 @@ function FillDataAddClassForm(_data) {
   $.each( _data, function( key, value ) {     
     $(`#id_${key}`).val(value);
   });
-  $(`#id_adaptation_class`).val(_data.adaptation_class.id);
+  $(`#id_education_class`).val(_data.education_class.id);
 }
 
 function FillDataCompareClassModal(_data) {
@@ -543,10 +543,10 @@ function FillDataCompareClassModal(_data) {
   $.each( _data, function( key, value ) {     
     $(`.table-compare #id_${key}`).val(value);
   });
-  $.each( _data.adaptation_class, function( key, value ) {     
-    $(`.table-compare #id_${key}_adaptation_class`).val(value);
+  $.each( _data.education_class, function( key, value ) {     
+    $(`.table-compare #id_${key}_education_class`).val(value);
   });
-  $(`#id_adaptation_class`).val(_data.adaptation_class.id);
+  $(`#id_education_class`).val(_data.education_class.id);
 }
 
 $(activate_button).on("click", function(){
@@ -558,7 +558,7 @@ $(activate_button).on("click", function(){
     "İptal et.",
     () =>{
     data = { 'is_confirmated': true };
-    UpdateAdaptationConfirmation(data, adaptation_closed_api_url, $(this), table);
+    UpdateeducationConfirmation(data, education_closed_api_url, $(this), table);
     }
   );
 });
@@ -572,14 +572,14 @@ $(deactivate_button).on("click", function(){
     "İptal et.",
     () =>{
     data = { 'is_confirmated': false };
-    UpdateAdaptationConfirmation(data, adaptation_closed_api_url, $(this), table);
+    UpdateeducationConfirmation(data, education_closed_api_url, $(this), table);
     }
   );
 });
 
-function UpdateAdaptationConfirmation(_data, _url, _button = null, _table = null, _modal = null) {
+function UpdateeducationConfirmation(_data, _url, _button = null, _table = null, _modal = null) {
   request
-    .patch_r(_url.replace("0", adaptation_id), _data).then((response) => {
+    .patch_r(_url.replace("0", education_id), _data).then((response) => {
       if (response.ok) {
         response.json().then(data => {
           if (data.is_confirmated !== undefined) isClosedButtonControl(data.is_confirmated);        
@@ -587,8 +587,8 @@ function UpdateAdaptationConfirmation(_data, _url, _button = null, _table = null
             _table.ajax.reload()
           }       
           if (data.is_confirmated){
-            $('#id_adaptation_semester').val(data.adaptation_semester).change()
-            $('#id_adaptation_year').val(data.adaptation_year).change()
+            $('#id_education_semester').val(data.education_semester).change()
+            $('#id_education_year').val(data.education_year).change()
           }
           fire_alert([{
             message: {message:"Kaydınız başarıyla güncellendi"},

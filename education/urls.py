@@ -3,6 +3,6 @@ from education.views import *
 app_name = "education"
 
 urlpatterns = [
-    path('education/', AdaptationList.as_view(), name="education"),
+    path('dersler/', LessonListView.as_view(), name="lesson_list"),
     path('api/education/', include('education.api.urls')),
 ]

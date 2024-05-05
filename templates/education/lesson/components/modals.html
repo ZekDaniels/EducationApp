@@ -1,4 +1,4 @@
-{% if adaptation_classes %}
+{% if education_classes %}
 {% load filter_student_class_list %}
 
 
@@ -58,7 +58,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for class in adaptation_classes|filter_student_class_list:semester %}
+                      {% for class in education_classes|filter_student_class_list:semester %}
                       <tr>
                         <td class="align-middle">{{class.code}}</td>
                         <td class="align-middle">{{class.class_name}}</td>
@@ -67,7 +67,7 @@
                         <td class="align-middle">{{class.practical}}</td>
                         <td class="align-middle">{{class.credit}}</td>
                         <td class="align-middle">{{class.akts}}</td>
-                        <td class="align-middle"><button class="btn btn-md btn-primary show_content_button" data-id="{{class.id}}" data-toggle="modal" data-target="#AdaptationClassContentModal">Ders İçeriğini Gör</button></td>
+                        <td class="align-middle"><button class="btn btn-md btn-primary show_content_button" data-id="{{class.id}}" data-toggle="modal" data-target="#educationClassContentModal">Ders İçeriğini Gör</button></td>
                       </tr>
                       {% endfor %}
                       
@@ -89,7 +89,7 @@
 <!-- Show Class Content Modal -->
 <div
   class="modal fade m-5"
-  id="AdaptationClassContentModal"
+  id="educationClassContentModal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="exampleModalLabelshowClassContent"
@@ -236,7 +236,7 @@
 
 
                       <td class="border border-dark">
-                        {% for field in disable_adaptation_class_form %}
+                        {% for field in disable_education_class_form %}
         
                         <div class="form-group col-lg-12 mx-auto mb-2">
                           <label>{{field.label}}</label>

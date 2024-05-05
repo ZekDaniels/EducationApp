@@ -26,7 +26,7 @@
                 {% endif %}
                 <form id="mainForm">
                     {% csrf_token %}
-                    {% for field in adaptation_create_form %}
+                    {% for field in education_create_form %}
                     {% if forloop.first %}
                     <div class="form-group col-lg-12 text-center">
                         <button class="btn btn-primary" id="custom_record">                           
@@ -70,14 +70,14 @@
     is_unrecorded = false
 
     university_list_api_url = new URL(window.location.href)
-    university_list_api_url.pathname = "{% url 'adaptation:university_list_api' %}"
+    university_list_api_url.pathname = "{% url 'education:university_list_api' %}"
     faculty_list_api_url = new URL(window.location.href) 
-    faculty_list_api_url.pathname = "{% url 'adaptation:faculty_list_api' %}"
+    faculty_list_api_url.pathname = "{% url 'education:faculty_list_api' %}"
     science_list_api_url = new URL(window.location.href) 
-    science_list_api_url.pathname = "{% url 'adaptation:science_list_api' %}"
-    adaptation_create_api_url = "{% url 'education:education_create_api' %}"
+    science_list_api_url.pathname = "{% url 'education:science_list_api' %}"
+    education_create_api_url = "{% url 'education:education_create_api' %}"
 </script>
 
-<script src="{% static 'js/adaptation/adaptation_create.js' %}"></script>
+<script src="{% static 'js/education/education_create.js' %}"></script>
 
 {% endblock %}

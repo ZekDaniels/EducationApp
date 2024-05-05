@@ -286,7 +286,7 @@
             <tbody>    
                 <tr class="table7row2">
                     <td style="width:70%">Konu: İntibak / Ders Muafiyeti Talebi</td>          
-                    <td>Tarih: {{adaptation.decision_date}}</td>
+                    <td>Tarih: {{education.decision_date}}</td>
                 </tr>          
             </tbody>
 
@@ -296,9 +296,9 @@
             <tbody>    
                 <tr class="table7row2">
                     <td style="width:15%">Adı Soyadı</td>          
-                    <td>{{adaptation.user.profile.namesurname}}</td>
+                    <td>{{education.user.profile.namesurname}}</td>
                     <td style="width:15%">T.C. Kimlik No</td>          
-                    <td>{{adaptation.user.profile.identification_number}}</td>
+                    <td>{{education.user.profile.identification_number}}</td>
                 </tr>          
             </tbody>
 
@@ -307,9 +307,9 @@
             <tbody>    
                 <tr class="table7row2">
                     <td style="width:15%">Öğrenci No</td>          
-                    <td>{{adaptation.user.profile.student_number}}</td>
+                    <td>{{education.user.profile.student_number}}</td>
                     <td style="width:15%">Cep Tel No</td>          
-                    <td>{{adaptation.user.profile.phone_number}}</td>
+                    <td>{{education.user.profile.phone_number}}</td>
                 </tr>          
             </tbody>
 
@@ -318,10 +318,10 @@
             <tbody>    
                 <tr class="table7row2">
                     <td style="margin-left: 4px;">Önceki Üniversite/Fakülte/Bölüm: 
-                    {% if adaptation.is_unrecorded %}
-                    {{adaptation.university_unrecorded}} / {{adaptation.faculty_unrecorded}} / {{adaptation.science_unrecorded}} <br> <br> </td>          
+                    {% if education.is_unrecorded %}
+                    {{education.university_unrecorded}} / {{education.faculty_unrecorded}} / {{education.science_unrecorded}} <br> <br> </td>          
                     {% else %}
-                    {{adaptation.university}} / {{adaptation.faculty}} / {{adaptation.science}} <br> <br> </td>          
+                    {{education.university}} / {{education.faculty}} / {{education.science}} <br> <br> </td>          
                     {% endif %}
                 </tr>          
             </tbody>
@@ -339,7 +339,7 @@
             <tbody>    
                 <tr class="table7row2">
                     <td style="width:15%">Kayıt Şekli </td>          
-                    <td style="margin-left: 4px;"> Notla Yatay Geçiş {% if adaptation.reason_for_coming == "nyg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp; Ek Madde 1 Yatay Geçiş {% if adaptation.reason_for_coming == "eyg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp;  Dikey Geçiş {% if adaptation.reason_for_coming == "dg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp; Diğer:{% if adaptation.reason_for_coming == "yo" or adaptation.reason_for_coming == "mt" %} {{adaptation.get_reason_for_coming_display}} {% else %} _____ {% endif %}</td>
+                    <td style="margin-left: 4px;"> Notla Yatay Geçiş {% if education.reason_for_coming == "nyg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp; Ek Madde 1 Yatay Geçiş {% if education.reason_for_coming == "eyg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp;  Dikey Geçiş {% if education.reason_for_coming == "dg" %} &#9632; {% else %} &#x25A1; {% endif %} &nbsp; Diğer:{% if education.reason_for_coming == "yo" or education.reason_for_coming == "mt" %} {{education.get_reason_for_coming_display}} {% else %} _____ {% endif %}</td>
                 </tr>          
             </tbody>
 
@@ -368,10 +368,10 @@
                     <th> <h2 class="boldheader" style="padding-top: 1px; padding-bottom: 0;">DAHA ÖNCEKİ YÜKSEKÖĞRETİM KURUMLARINDA ALIP BAŞARMIŞ OLDUĞUM DERSLER</h2> </th>
                     <th> <h2 class="boldheader" style="padding-top: 1px; padding-bottom: 0;">FAKÜLTEMİZDE MUAF OLMAK İSTEDİĞİM DERSLER</h2> </th>
                 </tr> 
-                {% for student_class in adaptation.student_classes.all %}
+                {% for student_class in education.student_classes.all %}
                 <tr class="table7row1" style="font-size:14px">
                     <td class="responsivecell">{{student_class.class_name}}</td>
-                    <td class="responsivecell">{{student_class.adaptation_class.class_name}}</td>
+                    <td class="responsivecell">{{student_class.education_class.class_name}}</td>
                 </tr> 
                 {% endfor %}
                 

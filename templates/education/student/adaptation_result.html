@@ -30,8 +30,8 @@
                     {% csrf_token %}
                     <div class="row">
 
-                        {% for field in disable_adaptation_form %}
-                        {% if not adaptation.is_unrecorded %}                             
+                        {% for field in disable_education_form %}
+                        {% if not education.is_unrecorded %}                             
                                 {% if field.name == 'university_unrecorded' or field.name == 'faculty_unrecorded' or field.name == 'science_unrecorded' %}
                                 {% else %}
                                     <div id="{{field.name}}_div" class="form-group col-lg-4">
@@ -60,16 +60,16 @@
             <div class="card-footer">
                 <div class="row p-3">     
                     <div class="ml-auto">
-                        <a href="{% url 'education:education_basic_pdf_admin' adaptation.id %}">
-                            <button type="" id="download_basic_pdf_button" class="btn btn-success btn-icon-split" {% if not adaptation.is_closed %}disabled{% endif %}>
+                        <a href="{% url 'education:education_basic_pdf_admin' education.id %}">
+                            <button type="" id="download_basic_pdf_button" class="btn btn-success btn-icon-split" {% if not education.is_closed %}disabled{% endif %}>
                                 <span class="icon text-white-50">
                                     <i class="fas fa-download"></i>
                                 </span>
                                 <span class="text">Form03 PDF'i indir</span>
                             </button>
                         </a>
-                        <a href="{% url 'education:education_complex_pdf_admin' adaptation.id %}">
-                            <button type="" id="download_compplex_pdf_button" class="btn btn-success btn-icon-split" {% if not adaptation.is_confirmated %}disabled{% endif %}>
+                        <a href="{% url 'education:education_complex_pdf_admin' education.id %}">
+                            <button type="" id="download_compplex_pdf_button" class="btn btn-success btn-icon-split" {% if not education.is_confirmated %}disabled{% endif %}>
                                 <span class="icon text-white-50">
                                     <i class="fas fa-download"></i>
                                 </span>
@@ -113,17 +113,17 @@
 
 </div>
 
-{% include "adaptation/student/components/modals.html" %}
+{% include "education/student/components/modals.html" %}
 {% endblock %}
 
 {% block javascript %}
 <script>
-    adaptation_id = {{adaptation.id}}
-    adaptation_closed_api_url = "{% url 'education:education_closed_api' 0 %}"
-    adaptation_class_detail_api_url = "{% url 'education:education_class_detail_api' 0 %}"
+    education_id = {{education.id}}
+    education_closed_api_url = "{% url 'education:education_closed_api' 0 %}"
+    education_class_detail_api_url = "{% url 'education:education_class_detail_api' 0 %}"
 
-    student_classes_list_api_url = "{% url 'adaptation:student_classes_list_api' %}?adaptation="+adaptation_id
+    student_classes_list_api_url = "{% url 'education:student_classes_list_api' %}?education="+education_id
 </script>
 
-<script src="{% static 'js/adaptation/adaptation_result.js' %}"></script>
+<script src="{% static 'js/education/education_result.js' %}"></script>
 {% endblock %}

@@ -28,7 +28,7 @@
                 <form id="mainForm">
                     <div class="row">
 
-                        {% for field in disable_adaptation_form %}
+                        {% for field in disable_education_form %}
                         <div class="form-group col-lg-4">
                             <label>{{field.label}}</label>
                             {{ field }}
@@ -42,13 +42,13 @@
             <div class="card-footer">
                 <div class="row p-3">     
                     <div class="ml-auto">
-                        <button type="submit" id="deactivate_button" href="#" class="btn btn-danger btn-icon-split" {% if adaptation.is_closed %}disabled{% endif %}>
+                        <button type="submit" id="deactivate_button" href="#" class="btn btn-danger btn-icon-split" {% if education.is_closed %}disabled{% endif %}>
                             <span class="icon text-white-50">
                                 <i class="fas fa-times"></i>
                             </span>
                             <span class="text">İntibağı Kapat</span>
                         </button>
-                        <button type="submit" id="activate_button" href="#" class="btn btn-success btn-icon-split" {% if not adaptation.is_closed %}disabled{% endif %}>
+                        <button type="submit" id="activate_button" href="#" class="btn btn-success btn-icon-split" {% if not education.is_closed %}disabled{% endif %}>
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
@@ -108,7 +108,7 @@
                     {% csrf_token %}
                     <div class="row">
 
-                        {% for field in adaptation_result_note_form %}
+                        {% for field in education_result_note_form %}
                         <div class="form-group col-lg-12">
                             <label>{{field.label}}</label>
                             {{ field }}
@@ -136,20 +136,20 @@
     </div>
 </div>
 
-{% include "adaptation/professor/components/modals.html" %}
+{% include "education/teacher/components/modals.html" %}
 {% endblock %}
 
 {% block javascript %}
 <script>
-    adaptation_id = {{adaptation.id}}
-    adaptation_closed_api_url = "{% url 'education:education_closed_api' 0 %}"
-    adaptation_class_detail_api_url = "{% url 'education:education_class_detail_api' 0 %}"
+    education_id = {{education.id}}
+    education_closed_api_url = "{% url 'education:education_closed_api' 0 %}"
+    education_class_detail_api_url = "{% url 'education:education_class_detail_api' 0 %}"
 
-    adaptation_class_confirmation_api_url = "{% url 'education:education_class_confirmation_api' %}"
-    adaptation_class_confirmation_delete_api_url = "{% url 'education:education_class_confirmation_delete_api' 0 %}"
+    education_class_confirmation_api_url = "{% url 'education:education_class_confirmation_api' %}"
+    education_class_confirmation_delete_api_url = "{% url 'education:education_class_confirmation_delete_api' 0 %}"
 
-    student_classes_list_api_url = "{% url 'adaptation:student_classes_list_api' %}?adaptation="+adaptation_id
+    student_classes_list_api_url = "{% url 'education:student_classes_list_api' %}?education="+education_id
 </script>
 
-<script src="{% static 'js/adaptation/adaptation_confirmation.js' %}"></script>
+<script src="{% static 'js/education/education_confirmation.js' %}"></script>
 {% endblock %}

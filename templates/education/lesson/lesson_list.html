@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+{% comment %}
+{% load get_max_grade %}
+
+{% endcomment %}
+{% block title %}İntibak Başvuruları{% endblock %}
+
+{% block plugins %}
+<script src="{% static 'lib/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/vendor/datatables/dataTables.rowsGroup.js' %}"></script>
+{% endblock %}
+
+{% block mainRouteUrl %}{% url 'dashboard' %}{% endblock %}
+{% block href %} 
+#
+{% endblock %}
+{% block mainRoute %}Ana sayfa{% endblock %}
+{% block childRoute %}Dersler{% endblock %}
+{% block head %}Dersler{% endblock %}
+
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-lg-12 mb-4">
+        <!-- Simple Tables -->
+        <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">İntibak Başvuruları</h6>
+            </div>
+            <div class="table-responsive hide">
+                <table id="class-datatable" class="table align-items-center table-flush">
+                    <thead class="thead-light">
+
+                        <tr class="text-center">
+                            <th class="border border-white">Ders Kodu</th>
+                            <th class="border border-white">Ders Adı</th>
+                            <th class="border border-white">Ders Linki</th>  
+                            <th class="border border-white">Dönem</th>
+                            <th class="border border-white">Öğretmen Adı</th>
+                            <th class="border border-white">Öğretmen Email</th>
+                            <th class="border border-white">Öğretmen Kullanıcı Adı</th>  
+                            <th class="border border-white">Öğretmen Telefon Numarası</th>
+                            <th class="border border-white">Öğretmen Numarası</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <div class="row p-3">
+                    <button type="submit" id="main_submit_button" href="#" class="btn btn-success btn-icon-split ml-auto">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="text">Kaydet</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>      
+   
+</div>
+
+{% include "education/lesson/components/modals.html" %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+   
+   lesson_list_api_url = "{% url 'education:lesson_list_api' %}"
+   {% comment %} education_result_url = "{% url 'education:education_result_admin' 0 %}" {% endcomment %}
+   {% comment %} education_manage_url = "{% url 'education:education_manage' 0 %}" {% endcomment %}
+   {% comment %} education_confirmation_url = "{% url 'education:education_confirmation' 0 %}" {% endcomment %}
+
+   {% comment %} education_basic_pdf_admin_url = "{% url 'education:education_basic_pdf_admin' 0 %}" {% endcomment %}
+   {% comment %} education_complex_pdf_admin_url = "{% url 'education:education_complex_pdf_admin' 0 %}" {% endcomment %}
+   
+</script>
+
+<script src="{% static 'js/education/lesson_list.js' %}"></script>
+{% endblock %}

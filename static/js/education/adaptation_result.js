@@ -2,7 +2,7 @@
 const request = new Request(csrfToken);
 
 const show_content_button_selector =".show_content_button";
-const finish_adaptation_button_selector ="#finish_adaptation_button";
+const finish_education_button_selector ="#finish_education_button";
 
 const activate_button = $("#activate_button");
 const deactivate_button = $("#deactivate_button");
@@ -12,7 +12,7 @@ const semester_dropdowns_selector = ".toggle-semester-table";
 const turkish_content = $("#turkish-content");
 const english_content = $("#english-content");
 
-const AdaptationClassContentModal = $("#AdaptationClassContentModal");
+const educationClassContentModal = $("#educationClassContentModal");
 
 
 const cleanOptions = function (select_input , callback=null) {
@@ -53,7 +53,7 @@ init();
 
 function init() {
   setupListeners();
-  initializeStudentClassDatatables(table, student_classes_list_api_url, adaptation_id)
+  initializeStudentClassDatatables(table, student_classes_list_api_url, education_id)
 }
 
 function clearAddClassForm() {
@@ -107,11 +107,11 @@ $(semester_dropdowns_selector).on("click", function(){
 
 $(show_content_button_selector).on("click", function(){
   let id = $(this).data("id");
-  getAdaptationClassContent(id, adaptation_class_detail_api_url, AdaptationClassContentModal)
+  geteducationClassContent(id, education_class_detail_api_url, educationClassContentModal)
 });
 
 //Classes Activies
-function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _adaptation_id) {
+function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _education_id) {
   $.extend($.fn.dataTable.defaults, {
     autoWidth: false,
     dom: '<"datatable-header"fBl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -131,7 +131,7 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
     "searchCols": [
       null,
       {
-        "search": _adaptation_id
+        "search": _education_id
       },
     ],
     "serverSide": true,
@@ -146,15 +146,15 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
 
       {
         "name":"code",
-        "data": "adaptation_class.code"
+        "data": "education_class.code"
       },   
       {
         "name":"class_name",
-        "data": "adaptation_class.class_name"
+        "data": "education_class.class_name"
       },    
       {
         "name":"confirmation",
-        "data": "adaptation_class.code",
+        "data": "education_class.code",
         "render": function ( data, type, row ) {
           if(row.confirmation)
           return `<span class="badge badge-success">Onaylandı</span>`;
@@ -171,13 +171,13 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
   });
 }
 
-function getAdaptationClassContent(_id, _url, _modal = null) {
+function geteducationClassContent(_id, _url, _modal = null) {
   request
     .get_r(_url.replace("0", _id))
     .then((response) => {
       if (response.ok) {
         response.json().then(data => {
-          fillAdaptationClassContent(data);
+          filleducationClassContent(data);
         })
       } else {
         response.json().then(errors => {
@@ -188,7 +188,7 @@ function getAdaptationClassContent(_id, _url, _modal = null) {
     })
 }
 
-function fillAdaptationClassContent(_data) {
+function filleducationClassContent(_data) {
   turkish_content.html(_data.turkish_content);
   english_content.html(_data.english_content);
 }
@@ -198,8 +198,8 @@ function FillDataCompareClassModal(_data) {
   $.each( _data, function( key, value ) {     
     $(`.table-compare #id_${key}`).val(value);
   });
-  $.each( _data.adaptation_class, function( key, value ) {     
-    $(`.table-compare #id_${key}_adaptation_class`).val(value);
+  $.each( _data.education_class, function( key, value ) {     
+    $(`.table-compare #id_${key}_education_class`).val(value);
   });
-  $(`#id_adaptation_class`).val(_data.adaptation_class.id);
+  $(`#id_education_class`).val(_data.education_class.id);
 }

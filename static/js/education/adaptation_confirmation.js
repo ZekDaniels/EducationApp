@@ -2,7 +2,7 @@
 const request = new Request(csrfToken);
 
 const show_content_button_selector =".show_content_button";
-const finish_adaptation_button_selector ="#finish_adaptation_button";
+const finish_education_button_selector ="#finish_education_button";
 
 const activate_button = $("#activate_button");
 const deactivate_button = $("#deactivate_button");
@@ -14,7 +14,7 @@ const semester_dropdowns_selector = ".toggle-semester-table";
 
 const turkish_content = $("#turkish-content");
 
-const AdaptationClassContentModal = $("#AdaptationClassContentModal");
+const educationClassContentModal = $("#educationClassContentModal");
 
 
 const cleanOptions = function (select_input , callback=null) {
@@ -55,7 +55,7 @@ init();
 
 function init() {
   setupListeners();
-  initializeStudentClassDatatables(table, student_classes_list_api_url, adaptation_id)
+  initializeStudentClassDatatables(table, student_classes_list_api_url, education_id)
 }
 
 function clearAddClassForm() {
@@ -92,7 +92,7 @@ function setupListeners() {
     event.preventDefault();
     let formData = new FormData(this);
     let data = Object.fromEntries(formData.entries());
-    UpdateAdaptation(data, adaptation_closed_api_url, save_result_note_button);
+    Updateeducation(data, education_closed_api_url, save_result_note_button);
   });
 }
 
@@ -113,8 +113,8 @@ $('tbody').on("click", '.confirm_class_button', function (event) {
   let row = $(this).closest("tr");
   let data = table.row(row).data();
   if (data){
-    confirm_data = { 'adaptation_class': data.adaptation_class.id, 'adaptation': data.adaptation };
-    addAdaptationClassConfirmation(data.id, confirm_data, adaptation_class_confirmation_api_url, $(this), table);
+    confirm_data = { 'education_class': data.education_class.id, 'education': data.education };
+    addeducationClassConfirmation(data.id, confirm_data, education_class_confirmation_api_url, $(this), table);
   }
   
 });
@@ -122,7 +122,7 @@ $('tbody').on("click", '.confirm_class_button', function (event) {
 $('tbody').on("click", '.disconfirm_class_button', function (event) {
   let deleteable_class_id = $(this).data('id');
   if (deleteable_class_id){
-    deleteAdaptationClassConfirmation(deleteable_class_id, adaptation_class_confirmation_delete_api_url, $(this), table);
+    deleteeducationClassConfirmation(deleteable_class_id, education_class_confirmation_delete_api_url, $(this), table);
   }
   
 });
@@ -136,14 +136,14 @@ $(activate_button).on("click", function(){
     "İptal et.",
     () =>{
     data = { 'is_closed': false };
-    UpdateAdaptation(data, adaptation_closed_api_url, $(this), table);
+    Updateeducation(data, education_closed_api_url, $(this), table);
     }
   );
 });
 
 $(deactivate_button).on("click", function(){
   data = { 'is_closed': true };
-  UpdateAdaptation(data, adaptation_closed_api_url, $(this)); 
+  Updateeducation(data, education_closed_api_url, $(this)); 
 });
 
 $(semester_dropdowns_selector).on("click", function(){
@@ -154,11 +154,11 @@ $(semester_dropdowns_selector).on("click", function(){
 
 $(show_content_button_selector).on("click", function(){
   let id = $(this).data("id");
-  getAdaptationClassContent(id, adaptation_class_detail_api_url, AdaptationClassContentModal)
+  geteducationClassContent(id, education_class_detail_api_url, educationClassContentModal)
 });
 
 
-function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = null) {
+function Updateeducation(_data, _url, _button = null, _table = null, _modal = null) {
   let button_text = ""
   if (_button) {
     button_text = _button.html();
@@ -166,7 +166,7 @@ function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = n
     _button.html(`<i class="icon-spinner2 spinner"></i>`);
   }
   request
-    .patch_r(_url.replace("0", adaptation_id), _data).then((response) => {
+    .patch_r(_url.replace("0", education_id), _data).then((response) => {
       if (_button) {
         _button.html(button_text);
         _button.prop("disabled", false);
@@ -200,7 +200,7 @@ function UpdateAdaptation(_data, _url, _button = null, _table = null, _modal = n
 
 
 //Classes Activies
-function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _adaptation_id) {
+function initializeStudentClassDatatables(_table, _student_classes_list_api_url, _education_id) {
   $.extend($.fn.dataTable.defaults, {
     autoWidth: false,
     dom: '<"datatable-header"fBl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -220,7 +220,7 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
     "searchCols": [
       null,
       {
-        "search": _adaptation_id
+        "search": _education_id
       },
     ],
     "serverSide": true,
@@ -257,7 +257,7 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
       },
       {
         "name":"confirmation",
-        "data": "adaptation_class.code",
+        "data": "education_class.code",
         "render": function ( data, type, row ) {
           if(row.confirmation.exists)
           return `
@@ -271,7 +271,7 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
           return `
           <div class="row">
             <button class='btn disconfirm_class_button p-0 mx-auto border border-danger' disabled><i class='text-danger fas fa-times m-1'></i></button>
-            <button class='btn confirm_class_button p-0 mx-auto' ><i class='text-success fas fa-check m-1' data-adaptation-class-id="${row.adaptation_class.id}"></i></button>
+            <button class='btn confirm_class_button p-0 mx-auto' ><i class='text-success fas fa-check m-1' data-education-class-id="${row.education_class.id}"></i></button>
           </div>
           `;
         }
@@ -283,13 +283,13 @@ function initializeStudentClassDatatables(_table, _student_classes_list_api_url,
   });
 }
 
-function getAdaptationClassContent(_id, _url, _modal = null) {
+function geteducationClassContent(_id, _url, _modal = null) {
   request
     .get_r(_url.replace("0", _id))
     .then((response) => {
       if (response.ok) {
         response.json().then(data => {
-          fillAdaptationClassContent(data);
+          filleducationClassContent(data);
         })
       } else {
         response.json().then(errors => {
@@ -300,11 +300,11 @@ function getAdaptationClassContent(_id, _url, _modal = null) {
     })
 }
 
-function fillAdaptationClassContent(_data) {
+function filleducationClassContent(_data) {
   turkish_content.html(_data.turkish_content);
 }
 
-function addAdaptationClassConfirmation(_id, _data, _url, _button = null, _table = null, _modal = null) {
+function addeducationClassConfirmation(_id, _data, _url, _button = null, _table = null, _modal = null) {
   let button_text = ""
   if (_button) {
     button_text = _button.html();
@@ -337,7 +337,7 @@ function addAdaptationClassConfirmation(_id, _data, _url, _button = null, _table
     });
 }
 
-function deleteAdaptationClassConfirmation(_id, _url, _button = null, _table = null, _modal = null) {
+function deleteeducationClassConfirmation(_id, _url, _button = null, _table = null, _modal = null) {
   let button_text = ""
   if (_button) {
     button_text = _button.html();
@@ -373,10 +373,10 @@ function FillDataCompareClassModal(_data) {
   $.each( _data, function( key, value ) {     
     $(`.table-compare #id_${key}`).val(value);
   });
-  $.each( _data.adaptation_class, function( key, value ) {     
-    $(`.table-compare #id_${key}_adaptation_class`).val(value);
+  $.each( _data.education_class, function( key, value ) {     
+    $(`.table-compare #id_${key}_education_class`).val(value);
   });
-  $(`#id_adaptation_class`).val(_data.adaptation_class.id);
+  $(`#id_education_class`).val(_data.education_class.id);
 }
 
 function isClosedButtonControl(is_closed) {
