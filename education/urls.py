@@ -4,5 +4,5 @@ app_name = "education"
 
 urlpatterns = [
     path('education/', AdaptationList.as_view(), name="education"),
-    path('api/', include('education.api.urls')),
+    path('api/education/', include('education.api.urls')),
 ]

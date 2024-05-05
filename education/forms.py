@@ -16,8 +16,9 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class StyledFormMixin(BaseStyledFormMixin):
-    def __init__(self, styles=STYLES, *args, **kwargs):
-        super().__init__(*args, **kwargs, styles=styles)
+    def __init__(self, *args, **kwargs):
+        self._styles = STYLES
+        super().__init__(*args, **kwargs)
         
 
 class StudentClassForm(forms.ModelForm, StyledFormMixin):

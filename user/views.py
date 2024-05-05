@@ -51,7 +51,7 @@ class RegisterView(View):
         profileform = NewProfileForm(request.POST)
         
         if userform.is_valid() and profileform.is_valid():
-            userform.instance.username = profileform.instance.student_number
+            userform.instance.username = profileform.instance.number
             with transaction.atomic():
                 user = userform.save(commit=False)  
                 user.is_active = False

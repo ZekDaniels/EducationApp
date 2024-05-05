@@ -3,9 +3,13 @@ from django import template
 register = template.Library()
 
 @register.filter
-def is_allowed_user(obj):
-   return obj.is_allowed_user()
+def student_permitted(obj):
+   return obj.student_permitted()
 
 @register.filter
-def is_allowed_simple(obj):
-   return obj.is_allowed_simple()
+def teacher_permitted(obj):
+   return obj.teacher_permitted()
+
+@register.filter
+def admin_permitted(obj):
+   return obj.admin_permitted()

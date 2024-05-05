@@ -1,6 +1,8 @@
 from rest_framework import serializers
+
 from education.models import Lesson
 from utilities.serializers import ErrorNameMixin
+from education.models import LessonStep, LessonStepFile, LessonStudent
         
 class LessonListSerializer(serializers.ModelSerializer):
 
@@ -29,3 +31,50 @@ class LessonCreateSerializer(serializers.ModelSerializer, ErrorNameMixin):
         return data
         
 
+class LessonStepListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LessonStep
+        exclude = ['created_at', 'updated_at']
+        
+class LessonStepCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LessonStep
+        exclude = ['created_at','updated_at']
+        
+    def create(self, validated_data):
+        data = super().create(validated_data) 
+        return data
+    
+class LessonStepFileListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LessonStepFile
+        exclude = ['created_at', 'updated_at']
+        
+class LessonStepFileCreateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = LessonStepFile
+        exclude = ['created_at','updated_at']
+        
+    def create(self, validated_data):
+        data = super().create(validated_data) 
+        return data
+
+class LessonStudentListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LessonStudent
+        exclude = ['created_at', 'updated_at']
+
+class LessonStudentCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LessonStudent
+        exclude = ['created_at','updated_at']
+        
+    def create(self, validated_data):
+        data = super().create(validated_data) 
+        return data

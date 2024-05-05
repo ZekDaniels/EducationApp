@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path(os.getenv('SECRET_ADMIN_URL')+'/admin/', admin.site.urls),
     path('', include('user.urls')),
-    path('intibak/', include('education.urls')),
+    path('', include('education.urls')),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -24,16 +24,18 @@
         <div id="collapseApply" class="collapse" aria-labelledby="headingApply"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                {% if request.user.is_staff %}
+                {% if request.user.profile|student_permitted %}
                 <h6 class="collapse-header">Kurs</h6>
                
-                <a class="collapse-item" href="#">Derslerim</a>
-                <a class="collapse-item" href="#">Öğretmenler</a>
-                <a class="collapse-item" href="#">Tüm Eğitim Programları</a>
+                <a class="collapse-item" href="#">Eğitim Sürecim</a>
+                <a class="collapse-item" href="#">Öğretmenlerim</a>
                
-                {% else %}
-                <h6 class="collapse-header">Komisyon</h6>
-                <a class="collapse-item" href="#">Ders Seçim Listesi</a>
+                {% elif request.user.profile|teacher_permitted %}
+                <h6 class="collapse-header">Derslerim</h6>
+                <h6 class="collapse-header">Öğrencilerim</h6>
+               
+                {% elif request.user.profile|admin_permitted %}
+                <h6 class="collapse-header">Dersler</h6>
                 {% endif %}
                            
             </div>
