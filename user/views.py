@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import redirect, render
 from django.views.generic.base import View
-from django.contrib.auth import login
 from django.db import transaction
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator
@@ -15,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from user.tokens import account_activation_token
 from user.forms import NewUserForm, NewProfileForm, ProfileUpdateForm, UserLoginForm
-
+from user.models import Profile
 # Create your views here.
 
 class DashboardView(LoginRequiredMixin, View):
@@ -51,10 +50,13 @@ class RegisterView(View):
         profileform = NewProfileForm(request.POST)
         
         if userform.is_valid() and profileform.is_valid():
-            userform.instance.username = profileform.instance.number
+            userform.instance.username
             with transaction.atomic():
                 user = userform.save(commit=False)  
                 user.is_active = False
+                import ipdb; ipdb.set_trace()
+                if profileform.cleaned_data.get('is_teacher'):
+                    user.profile.user_role = Profile.teacher
                 user.save()  
                 current_site = get_current_site(request)
                 mail_subject = 'Hesabını aktif hale getir.'

@@ -25,23 +25,32 @@
   </form>
   <form id="form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="row">
-
-      {% for field in profileform %}
-      <div class="form-group col-lg-6">
-        <label>{{field.label}}</label>
-        {{ field }}
-        {{ field.errors }}
+    <div class="row mx-1">
+      <div class="form-group col-lg-4">
+        <label>{{profileform.namesurname.label}}</label>
+        {{ profileform.namesurname }}
+        {{ profileform.namesurname.errors }}
       </div>
-      {% endfor %}
       {% for field in userform %}
-      <div class="form-group col-lg-6 align-items-center">
+      <div class="form-group col-lg-4 align-items-center">
         <label>{{field.label}}</label>
         {{ field }}
         {{ field.errors }}
       </div>
       {% endfor %}
-
+      <div class="form-group col-lg-4 align-items-center">
+        &nbsp;
+      </div>
+      
+      <div class="row mx-1">
+        <div class="form-group">
+          <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+            {{ profileform.is_teacher }}
+            {{ profileform.is_teacher.errors }}
+            <label class="custom-control-label" for="id_is_teacher">{{profileform.is_teacher.label}}</label>
+          </div>
+        </div>
+      </div>
     </div>
     <hr>
     <div class="form-group">

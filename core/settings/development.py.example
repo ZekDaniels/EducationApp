@@ -8,14 +8,14 @@ DEBUG = True
 
 #This settings for temporary use so they will change in production
 # https://data-flair.training/blogs/django-send-email/
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # use this for unreal email sending
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_PORT = 587
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "ni-chrome.nothinghosting.com"
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = "zekeriya_sahin_avsar@hotmail.com"
-EMAIL_HOST_PASSWORD = "zeki1999"
-DEFAULT_FROM_EMAIL = "Zekeriya Şahin Avşar <zekeriya_sahin_avsar@hotmail.com>"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "info@nothing.com"
+EMAIL_HOST_PASSWORD = "nothing"
+DEFAULT_FROM_EMAIL = "Nothing <nothing@nothing.com>"
+
 
 
 # Static files (CSS, JavaScript, Images)

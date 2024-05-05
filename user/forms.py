@@ -8,6 +8,9 @@ from user.models import Profile
 from utilities.forms import StyledFormMixin as BaseStyledFormMixin
 
 STYLES = {
+    "CheckboxInput": {
+        'class': 'custom-control-input'
+    },
      "else": {
         'class': 'form-control'
     }
@@ -15,7 +18,7 @@ STYLES = {
 
 class StyledFormMixin(BaseStyledFormMixin):
     def __init__(self, *args, **kwargs):
-        self._styles = STYLES
+        self.styles = STYLES
         super().__init__(*args, **kwargs)
         
 class UserLoginForm(AuthenticationForm):
@@ -48,10 +51,7 @@ class NewUserForm(UserCreationForm, StyledFormMixin):
 
 class NewProfileForm(forms.ModelForm, StyledFormMixin):
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for name in self.fields:
-            self.fields[name].required = True
+    is_teacher = forms.BooleanField(required=False, label='Öğretmen Adayıyım', widget=forms.CheckboxInput(attrs={'class':'custom-control-input'}))
 
     class Meta:
         model = Profile

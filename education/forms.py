@@ -17,7 +17,7 @@ class DateInput(forms.DateInput):
 
 class StyledFormMixin(BaseStyledFormMixin):
     def __init__(self, *args, **kwargs):
-        self._styles = STYLES
+        self.styles = STYLES
         super().__init__(*args, **kwargs)
         
 

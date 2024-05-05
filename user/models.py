@@ -41,7 +41,7 @@ class Profile(BaseModel):
 
     def __str__(self):
         model_text = f"{self.namesurname} | {self.user.username}"
-        if self.is_allowed_user():
+        if self.admin_permitted():
             model_text = f"{model_text} {self.get_user_role_display()}"
         return model_text
 
