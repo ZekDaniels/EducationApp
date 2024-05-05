@@ -8,6 +8,7 @@ from utilities.views import QueryListAPIView
 class LessonListAPIView(QueryListAPIView):
    
     # custom_related_fields = ['lessonstep_set', 'lessonstudent_set']
+    custom_related_fields = ['teacher']
     # queryset = Lesson.objects.select_related(*custom_related_fields).all()
     queryset = Lesson.objects.all()
     serializer_class = LessonListSerializer

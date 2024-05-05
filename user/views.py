@@ -69,7 +69,7 @@ class RegisterView(View):
                 email = EmailMessage(
                     mail_subject, message, to=[to_email]
                 )
-                email.send()
+                # email.send()
 
                 profileform = NewProfileForm(request.POST or None, instance=user.profile)
                 profileform.save()

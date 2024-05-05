@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from user.models import User
-
+from user.models import Profile
 
 class ErrorNameMixin(serializers.Serializer):
     @property
@@ -28,7 +28,15 @@ class UserListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username"]
+        fields = ["username", "email"]
+        
+class ProfileListSerializer(serializers.ModelSerializer):
+
+    user = UserListSerializer(read_only=True)
+    
+    class Meta:
+        model = Profile
+        exclude = ['created_at', 'updated_at']
         
 
 

@@ -13,14 +13,26 @@ class Lesson(BaseModelWithUser):
     spring = 'spring'
     summer = 'summer'
     
-    level1 = 'level1'
-    level2 = 'level2'
-    level3 = 'level3'
-    level4 = 'level4'
+    class1 = 'class1'
+    class2 = 'class2'
+    class3 = 'class3'
+    class4 = 'class4'
+    class5 = 'class5'
+    class6 = 'class6'
+    class7 = 'class7'
+    class8 = 'class8'
+    class9 = 'class9'
+    class10 = 'class10'
+    class11 = 'class11'
+    class12 = 'class12'
     
 
     SEMESETER_CHOICES = ((fall, ("Güz")), (spring, ("Bahar")), (summer, ("Yaz")), )
-    LEVEL_CHOICES = ((level1, ("1. Seviye")), (level2, ("2. Seviye")), (level3, ("3. Seviye")), (level4, ("4. Seviye")), )
+    CLASS_CHOICES = (
+        (class1, ("1. Sınıf")), (class2, ("2. Sınıf")), (class3, ("3. Sınıf")), (class4, ("4. Sınıf")),
+        (class5, ("5. Sınıf")), (class6, ("6. Sınıf")), (class7, ("7. Sınıf")), (class8, ("8. Sınıf")),
+        (class9, ("9. Sınıf")), (class10, ("10. Sınıf")), (class11, ("11. Sınıf")), (class12, ("12. Sınıf")),
+                     )
 
     class Meta:
         verbose_name = 'Ders'
@@ -29,9 +41,10 @@ class Lesson(BaseModelWithUser):
         
     code = models.CharField("Ders Kodu", max_length=20, unique=True, null=False, blank=False)
     class_name = models.CharField("Dersin Adı", max_length=255)
-    semester = models.PositiveIntegerField("Dönem", choices= SEMESETER_CHOICES, default=fall)
-    level = models.PositiveIntegerField("Seviye", choices= LEVEL_CHOICES, default=level1)
+    semester = models.CharField("Dönem", choices= SEMESETER_CHOICES, default=fall, max_length=10)
+    student_class = models.CharField("Sınıf", choices= CLASS_CHOICES, default=class1, max_length=10)
     teacher = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Öğretmen", related_name="taught_lessons")
+    link = models.URLField("Ders İçeriği Linki", max_length=500, null=True, blank=True)
 
     
     def __str__(self):
@@ -48,9 +61,7 @@ class LessonStudent(BaseModelWithUser):
         ordering = ['lesson', 'student']
         
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name="Ders", related_name="students")
-    student = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Öğrenci", related_name="enrolled_lessons")
-    link = models.URLField("Ders İçeriği Linki", max_length=500, null=True, blank=True)
-    
+    student = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name="Öğrenci", related_name="enrolled_lessons")    
     
     def __str__(self):
         return self.lesson.code+" - "+self.lesson.class_name+" --> "+ self.student.namesurname
@@ -84,6 +95,7 @@ class LessonStepFile(BaseModelWithUser):
         
     step = models.ForeignKey(LessonStep, on_delete=models.CASCADE, verbose_name="Aşama", related_name="files")
     file = models.FileField("Dosya", upload_to='lessons/files/', null=False, blank=False)
+    is_downloaded = models.BooleanField("İndirildi", default=False)
     
     def __str__(self):
         return self.step.name+" - "+self.file.name

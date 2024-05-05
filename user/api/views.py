@@ -1,4 +1,4 @@
-from education.api.serializers import *
+from user.api.serializers import *
 from rest_framework.filters import OrderingFilter
 from django.contrib.auth.models import User
 
@@ -11,5 +11,14 @@ class UserListView(QueryListAPIView):
     # queryset = User.objects.select_related(*custom_related_fields).all()
     queryset = User.objects.all()
     serializer_class = UserListSerializer
+    filter_backends = [OrderingFilter]
+    ordering_fields = '__all__'
+
+
+class ProfileListView(QueryListAPIView):
+
+    custom_related_fields = ['user']
+    queryset = Profile.objects.select_related(*custom_related_fields).all()
+    serializer_class = ProfileListSerializer
     filter_backends = [OrderingFilter]
     ordering_fields = '__all__'
