@@ -95,7 +95,6 @@ class LessonStepFile(BaseModelWithUser):
         
     step = models.ForeignKey(LessonStep, on_delete=models.CASCADE, verbose_name="Aşama", related_name="files")
     file = models.FileField("Dosya", upload_to='lessons/files/', null=False, blank=False)
-    is_downloaded = models.BooleanField("İndirildi", default=False)
     
     def __str__(self):
         return self.step.name+" - "+self.file.name
