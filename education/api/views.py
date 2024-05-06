@@ -22,6 +22,9 @@ class LessonCreateAPI(generics.CreateAPIView):
     
     queryset = Lesson.objects.all()
     serializer_class = LessonCreateSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user.profile, updated_by=self.request.user.profile)
 
 class LessonUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
     
@@ -49,6 +52,9 @@ class LessonStepCreateAPI(generics.CreateAPIView):
     
     queryset = LessonStep.objects.all()
     serializer_class = LessonStepCreateSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user.profile, updated_by=self.request.user.profile)
 
 class LessonStepUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
     
@@ -75,6 +81,9 @@ class LessonStepFileCreateAPI(generics.CreateAPIView):
     queryset = LessonStepFile.objects.all()
     serializer_class = LessonStepFileCreateSerializer
     
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user.profile, updated_by=self.request.user.profile)
+    
 class LessonStepFileUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
     
     queryset = LessonStepFile.objects.all()
@@ -99,6 +108,9 @@ class LessonStudentCreateAPI(generics.CreateAPIView):
         
     queryset = LessonStudent.objects.all()
     serializer_class = LessonStudentCreateSerializer
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user.profile, updated_by=self.request.user.profile)
     
 class LessonStudentUpdateAPI(generics.RetrieveUpdateDestroyAPIView):
     

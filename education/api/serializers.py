@@ -20,7 +20,7 @@ class LessonCreateSerializer(serializers.ModelSerializer, ErrorNameMixin):
 
     class Meta:
         model = Lesson
-        exclude = ['created_at','updated_at']
+        exclude = ['created_at','updated_at', 'created_by', 'updated_by']
 
 
     def validate_teacher(self, data):
@@ -36,7 +36,7 @@ class LessonCreateSerializer(serializers.ModelSerializer, ErrorNameMixin):
     
     
 class LessonStepFileListSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = LessonStepFile
         exclude = ['created_at', 'updated_at']
@@ -45,7 +45,7 @@ class LessonStepFileCreateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = LessonStepFile
-        exclude = ['created_at','updated_at']
+        exclude = ['created_at','updated_at', 'created_by', 'updated_by']
         
     def create(self, validated_data):
         data = super().create(validated_data) 
@@ -64,7 +64,7 @@ class LessonStepCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LessonStep
-        exclude = ['created_at','updated_at']
+        exclude = ['created_at','updated_at', 'created_by', 'updated_by']
         
     def create(self, validated_data):
         data = super().create(validated_data) 
@@ -77,7 +77,7 @@ class LessonStudentListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = LessonStudent
-        exclude = ['created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at', ]
 
 class LessonStudentCreateSerializer(serializers.ModelSerializer):
     
@@ -90,7 +90,7 @@ class LessonStudentCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LessonStudent
-        exclude = ['created_at','updated_at']
+        exclude = ['created_at','updated_at', 'created_by', 'updated_by']
         
     def create(self, validated_data):
         data = super().create(validated_data) 

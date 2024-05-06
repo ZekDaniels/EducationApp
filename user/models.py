@@ -23,7 +23,7 @@ class Profile(BaseModel):
     namesurname = models.CharField(("Ad Soyad"), max_length=200, default="")
     phone_number = models.CharField(("Telefon Numarası"), max_length=50, blank=True, null=True)
     address = models.TextField(("Adres"), blank=True, null=True)
-    number = models.CharField(("Öğrenci Numarası"), max_length=9,null=True, blank=True, unique=True, db_index=True)
+    number = models.CharField(("Numarası"), max_length=9,null=True, blank=True, unique=True, db_index=True)
     identification_number = models.CharField(("TC Kimlik No"), max_length=11, blank=True, null=True)
     user_role = models.CharField(("Kullanıcı Rolü"), max_length=17, choices=USER_ROLE_CHOICES, default=student)
 

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     #myapps
     'user',
     'education',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
